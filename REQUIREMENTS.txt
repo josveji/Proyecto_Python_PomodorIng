@@ -1,0 +1,10 @@
+=====REQUIERMENTS=====
+
+In order to excute correctly our program, PomodorING, you will need to follow the next instructions:
+
+1. Install our custom font. The font is already included on the files. Just click on it and press install botton.
+
+2. Install custom tkinter by doing:  "pip3 install customtkinter".
+   Special thanks and credits  to Tom Schimansky who built this incredible library. 
+
+3. Install PIL by doing: "pip3 install PIL".
