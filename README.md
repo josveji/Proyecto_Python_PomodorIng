@@ -13,4 +13,4 @@ With PomodorING you can:
 
 - Use a pomodoro timer and adjust it to your needs.
 - You can find a to-do list to keep track of what you need to do.
-- Play music to reach your maximi level of concentration.
+- Play music to reach your maximum level of concentration.
