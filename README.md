@@ -12,5 +12,5 @@ The name PomorING is a fusion of two words: Pomodoro, which means tomato in ital
 With PomodorING you can:
 
 - Use a pomodoro timer and adjust it to your needs.
-- You can fin a to-do list to keep track of what you need to do.
+- You can find a to-do list to keep track of what you need to do.
 - Play music to reach your maximi level of concentration.
