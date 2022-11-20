@@ -39,6 +39,9 @@ class PomodorING(customtkinter.CTk):
         self.resume_image = self.load_image("/app_buttons/start_music.png", 50)
         self.pomopet_image = self.load_image("/app_buttons/pomo_pet.jpg", 400)
 
+        #self.savename_r = open(self.rw_txt("/savename.txt"), "r")
+        #self.savename_w = open(self.rw_txt("/savename.txt"), "w")
+
         # =========tasks frame configuracion================
         self.frame_tasks = customtkinter.CTkFrame(master=self,
                                                  width=448,
@@ -99,6 +102,13 @@ class PomodorING(customtkinter.CTk):
         # configurando columnas repstart buttons
         self.frame_timer_5.rowconfigure(0, weight=1)
 
+        # =========name update====================
+        self.frame_upname = customtkinter.CTkFrame(master=self.frame_timer, fg_color="#FFFFFF")
+        self.frame_upname.grid(row=5, column=2, sticky="S")
+        # configurando columnas repstart buttons
+        self.frame_upname.columnconfigure((0, 1, 2), weight=1)
+        # configurando columnas repstart buttons
+        self.frame_upname.rowconfigure(0, weight=1)
 
 
 # -------------Widgets-----------------------------
@@ -162,6 +172,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
         self.check_box_1.grid(row=1, column=2, sticky="W")
 
@@ -169,6 +180,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
         self.check_box_2.grid(row=2, column=2, sticky="W")
 
@@ -176,6 +188,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
         self.check_box_3.grid(row=3, column=2, sticky="W")
 
@@ -183,6 +196,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
         self.check_box_4.grid(row=4, column=2, sticky="W")
 
@@ -190,6 +204,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
         self.check_box_5.grid(row=5, column=2, sticky="W")
 
@@ -197,6 +212,7 @@ class PomodorING(customtkinter.CTk):
                                                      text="",corner_radius=15,
                                                      border_width=2,
                                                      fg_color="#53da1c",
+                                                     border_color="#939ba2",
                                                      command=self.progressbar_increase)
 
         self.check_box_6.grid(row=6, column=2, sticky="W")
@@ -212,7 +228,7 @@ class PomodorING(customtkinter.CTk):
         # =========Temporizador===================
         # welcomeback label
         self.welcome_label = customtkinter.CTkLabel(master=self.frame_timer,
-                                                 text="WELCOMEBACK USERNAME!",
+                                                 text=("WELCOMEBACK USERNAME!"),
                                                  text_font=("pomodoring_font", 20))
         self.welcome_label.grid(row=0, column=1, columnspan=3, padx=1, pady=10)
 
@@ -273,14 +289,34 @@ class PomodorING(customtkinter.CTk):
                                                     fg_color="#FFFFFF")
         self.button_lessmin.grid(row=0, column=0, pady=20, sticky="SE")
 
-        self.entry_name = customtkinter.CTkEntry(master=self.frame_timer,
-                                                 width=330,
+        self.entry_name = customtkinter.CTkEntry(master=self.frame_upname,
+                                                 width=280, justify="center",
                                                  placeholder_text="WHAT IS YOUR NAME?",
                                                  text_font=("pomodoring_font", 15),
                                                  border_width=0,
                                                  corner_radius=15,
                                                  fg_color="#c0c2c5")
-        self.entry_name.grid(row=5, column=1, columnspan=3, pady=15, sticky="S")
+        self.entry_name.grid(row=0, column=0, columnspan=1, pady=15, sticky="S")
+
+        self.update_name = customtkinter.CTkButton(master=self.frame_upname,
+                                                 width=50,
+                                                 text="SAVE",
+                                                 text_font=("pomodoring_font", 13),
+                                                 border_width=0,
+                                                 corner_radius=15,
+                                                 fg_color="#c0c2c5",
+                                                 command=self.save_name)
+        self.update_name.grid(row=0, column=1, columnspan=1, pady=15, padx=10, sticky="S")
+
+        self.update_wlabel = customtkinter.CTkButton(master=self.frame_upname,
+                                                 width=50,
+                                                 text="APPLY",
+                                                 text_font=("pomodoring_font", 13),
+                                                 border_width=0,
+                                                 corner_radius=15,
+                                                 fg_color="#c0c2c5",
+                                                 command=self.read_name)
+        self.update_wlabel.grid(row=0, column=2, columnspan=1, pady=15, padx=1, sticky="S")
 
         # =========Reproductor de musica===========
         # nombre de la cancion
@@ -317,9 +353,39 @@ class PomodorING(customtkinter.CTk):
         value = value + 0.16666666667
         self.progressbar.set(value)
 
+    # load rectangular image with path relative to PATH
     def load_image(self, path, image_size):
-       """ load rectangular image with path relative to PATH """
-       return ImageTk.PhotoImage(Image.open(PATH + path).resize((image_size, image_size)))
+        return ImageTk.PhotoImage(Image.open(PATH + path).resize((image_size, image_size)))
+
+    # path relative to PATH
+    def rw_txt(self, path):
+        return (PATH + path)
+
+    read_name = False
+
+    def save_name(self):
+        # write txt
+
+        savename_w = open(self.rw_txt("/savename.txt"), "w")
+        name = self.entry_name.get()
+        name = str(name.upper())
+        print(name)
+        savename_w.write(name)
+        savename_w.close()
+
+
+    def read_name(self):
+        savename_r = open(self.rw_txt("/savename.txt"), "r")
+        newname = savename_r.readline()
+        print(newname)
+        self.welcome_label.configure(text=("WELCOMEBACK {}!".format(newname)))
+        self.welcome_label.update()
+
+    def show_name(self):
+        readname = self.savename_r.readline()
+        return readname
+        self.welcome_label.update()
+
 
 if __name__ == "__main__":
     app = PomodorING()
