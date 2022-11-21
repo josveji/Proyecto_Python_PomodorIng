@@ -14,3 +14,14 @@ With PomodorING you can:
 - Use a pomodoro timer and adjust it to your needs.
 - You can find a to-do list to keep track of what you need to do.
 - Play music to reach your maximum level of concentration.
+
+=========MUSIC DEMO CREDITS=========
+
+ON BOURBON STREET
+royalty free Music by Giorgio Di Campo for FreeSound Music 
+http://freesoundmusic.eu
+https://www.facebook.com/freemusicfor...
+https://youtube.com/freesoundmusic
+original video: 
+https://youtu.be/Bd5Of76Ylg4
+

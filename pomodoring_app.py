@@ -3,6 +3,7 @@
 import tkinter
 import customtkinter
 from PIL import Image, ImageTk
+import pygame
 import os
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -29,7 +30,7 @@ class PomodorING(customtkinter.CTk):
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-# -------------Abrir archivos externos-------------------------------
+# ------------------------Open files---------------------------
 
         self.start_image = self.load_image("/app_buttons/start.png", 50)
         self.reset_image = self.load_image("/app_buttons/reset.png", 50)
@@ -38,9 +39,6 @@ class PomodorING(customtkinter.CTk):
         self.pause_image = self.load_image("/app_buttons/pause.png", 50)
         self.resume_image = self.load_image("/app_buttons/start_music.png", 50)
         self.pomopet_image = self.load_image("/app_buttons/pomo_pet.jpg", 400)
-
-        #self.savename_r = open(self.rw_txt("/savename.txt"), "r")
-        #self.savename_w = open(self.rw_txt("/savename.txt"), "w")
 
         # =========tasks frame configuracion================
         self.frame_tasks = customtkinter.CTkFrame(master=self,
@@ -225,7 +223,7 @@ class PomodorING(customtkinter.CTk):
         self.progressbar.grid(row=0, column=0, columnspan=3, padx=20, sticky="SW")
         self.progressbar.set(0)
 
-        # =========Temporizador===================
+        # =========Timer===================
         # welcomeback label
         self.welcome_label = customtkinter.CTkLabel(master=self.frame_timer,
                                                  text=("WELCOMEBACK USERNAME!"),
@@ -243,8 +241,9 @@ class PomodorING(customtkinter.CTk):
                                                      image=self.pomopet_image)
         self.pomo_pet_label.grid(row=2, column=2, padx=1, sticky="S")
 
-        # botones de temporizador
+        # ----------------Timer buttons---------------
 
+        # reset button
         self.button_reset = customtkinter.CTkButton(master=self.frame_repstart,
                                                     width=5,
                                                     height=5,
@@ -256,6 +255,7 @@ class PomodorING(customtkinter.CTk):
                                                     fg_color="#FFFFFF")
         self.button_reset.grid(row=0, column=1, columnspan=1, pady=1,padx=5, sticky="NE")
 
+        # start button
         self.button_start = customtkinter.CTkButton(master=self.frame_repstart,
                                                     width=5,
                                                     height=5,
@@ -334,10 +334,11 @@ class PomodorING(customtkinter.CTk):
                                                     image=self.resume_image,
                                                     text="",
                                                     text_font=("pomodoring_font", 35),
-                                                    fg_color="#d1d5d8")
+                                                    fg_color="#d1d5d8",
+                                                    command=self.play_music)
         self.button_play.grid(row=1, column=0, padx=10, pady=10, sticky="NE")
 
-        self.button_last_song = customtkinter.CTkButton(master=self.frame_music,
+        self.button_stop_song = customtkinter.CTkButton(master=self.frame_music,
                                                     width=5,
                                                     height=5,
                                                     border_width=0,
@@ -345,9 +346,13 @@ class PomodorING(customtkinter.CTk):
                                                     image=self.pause_image,
                                                     text="",
                                                     text_font=("pomodoring_font", 35),
-                                                    fg_color="#d1d5d8")
-        self.button_last_song.grid(row=1, column=1, pady=10, sticky="NW")
- # ---------------Funciones------------------------
+                                                    fg_color="#d1d5d8",
+                                                    command=self.stop_music)
+        self.button_stop_song.grid(row=1, column=1, pady=10, sticky="NW")
+
+ # ---------------Functions------------------------
+
+    # progress bar linked to checkbox
     def progressbar_increase(self):
         value = self.progressbar.get()
         value = value + 0.16666666667
@@ -358,33 +363,48 @@ class PomodorING(customtkinter.CTk):
         return ImageTk.PhotoImage(Image.open(PATH + path).resize((image_size, image_size)))
 
     # path relative to PATH
-    def rw_txt(self, path):
+    def complete_path(self, path):
         return (PATH + path)
 
-    read_name = False
-
+    # save name in external file
     def save_name(self):
         # write txt
 
-        savename_w = open(self.rw_txt("/savename.txt"), "w")
+        savename_w = open(self.complete_path("/savename.txt"), "w")
         name = self.entry_name.get()
         name = str(name.upper())
         print(name)
         savename_w.write(name)
         savename_w.close()
 
-
+    # read username in external file
     def read_name(self):
-        savename_r = open(self.rw_txt("/savename.txt"), "r")
+        savename_r = open(self.complete_path("/savename.txt"), "r")
         newname = savename_r.readline()
         print(newname)
         self.welcome_label.configure(text=("WELCOMEBACK {}!".format(newname)))
         self.welcome_label.update()
 
+    # update welcome username label
     def show_name(self):
         readname = self.savename_r.readline()
         return readname
         self.welcome_label.update()
+
+    # start timer button
+
+    # play music
+    def play_music(self):
+        pygame.init()
+
+        pygame.mixer.music.load(self.complete_path("/OnBourbonStreet_GiorigioDiCampo.mp3"))
+        pygame.mixer.music.play(2)
+        return
+
+    # stop music
+    def stop_music(self):
+        pygame.mixer.music.load(self.complete_path("/OnBourbonStreet_GiorigioDiCampo.mp3"))
+        pygame.mixer.music.stop()
 
 
 if __name__ == "__main__":
