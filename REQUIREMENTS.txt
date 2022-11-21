@@ -7,7 +7,7 @@ In order to excute correctly our program, PomodorING, you will need to follow th
 2. Install custom tkinter by doing:  "pip3 install customtkinter".
    Special thanks and credits  to Tom Schimansky who built this incredible library. 
 
-3. Install PIL by doing: "pip3 install PIL".
+3. Install PIL by doing: "pip3 install Pillow".
 
 4. Install Pygame by doing: "pip3 install pygame".
 
