@@ -532,7 +532,7 @@ class PomodorING(customtkinter.CTk):
           min, sec = divmod(full_sec, 60)
 
           self.time_label.config(text=f"{min + extraTime}:{sec}")
-          self.update()
+          self.time_label.update()
           time.sleep(1)
 
   # Stop Timer
@@ -557,7 +557,7 @@ class PomodorING(customtkinter.CTk):
       sec = int(time_text_split[1])
       self.time_label.config(text=f"{min+extraTime}:{sec}")
       self.positivo = self.positivo - 1
-      self.update()
+      self.time_label.update()
 
   # more minutes
   def more_minutes(self):
@@ -571,7 +571,7 @@ class PomodorING(customtkinter.CTk):
       self.time_label.config(text=f"{min+extraTime}:{sec}")
       global positivo
       self.positivo = self.positivo + 1
-      self.update()
+      self.time_label.update()
 
   # play music
   def play_music(self):
